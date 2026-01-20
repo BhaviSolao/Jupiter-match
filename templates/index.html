@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jupiter Match</title>
+
+  <!-- PWA REQUIRED -->
+  <link rel="manifest" href="/static/manifest.json">
+  <meta name="theme-color" content="#081426">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #081426;
+      color: #e6eef8;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #ffffff;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      background-color: #112240;
+      padding: 24px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      border: 1px solid #1f3b73;
+    }
+
+    h2 {
+      color: #ffffff;
+      margin-bottom: 15px;
+    }
+
+    input[type="file"] {
+      margin-right: 12px;
+      color: #e6eef8;
+    }
+
+    button {
+      background-color: #1f3b73;
+      color: #ffffff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #162c55;
+    }
+
+    pre {
+      background-color: #081426;
+      color: #e6eef8;
+      padding: 14px;
+      border-radius: 6px;
+      margin-top: 18px;
+      white-space: pre-wrap;
+      font-size: 14px;
+      border: 1px solid #1f3b73;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Jupiter Match</h1>
+
+  <!-- ANALYZE RESUME -->
+  <div class="section">
+    <h2>Upload Resume</h2>
+    <input type="file" id="resumeFile">
+    <button onclick="analyzeResume()">Analyze Resume</button>
+    <pre id="resumeResult"></pre>
+  </div>
+
+  <!-- ANALYZE JOB -->
+  <div class="section">
+    <h2>Upload Job Description</h2>
+    <input type="file" id="jobFile">
+    <button onclick="analyzeJob()">Analyze Job</button>
+    <pre id="jobResult"></pre>
+  </div>
+
+  <!-- MATCH -->
+  <div class="section">
+    <h2>Match Job & Resume</h2>
+    <button onclick="matchJobResume()">Match</button>
+    <pre id="matchResult"></pre>
+  </div>
+</div>
+
+<script>
+async function analyzeResume() {
+  const file = document.getElementById("resumeFile").files[0];
+  if (!file) return alert("Please upload a resume");
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await fetch("/analyze-resume", {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await response.json();
+  document.getElementById("resumeResult").innerText = data.analysis;
+}
+
+async function analyzeJob() {
+  const file = document.getElementById("jobFile").files[0];
+  if (!file) return alert("Please upload a job description");
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await fetch("/analyze-job", {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await response.json();
+  document.getElementById("jobResult").innerText = data.analysis;
+}
+
+async function matchJobResume() {
+  const resumeFile = document.getElementById("resumeFile").files[0];
+  const jobFile = document.getElementById("jobFile").files[0];
+
+  if (!resumeFile || !jobFile) {
+    return alert("Upload both resume and job description");
+  }
+
+  const formData = new FormData();
+  formData.append("resume_file", resumeFile);
+  formData.append("job_file", jobFile);
+
+  const response = await fetch("/match-job-resume", {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await response.json();
+
+  document.getElementById("matchResult").innerText =
+    "ATS Score: " + data.ats_score + " (" + data.label + ")\n\n" +
+    "Matched Skills:\n" + data.matched_skills.join(", ") + "\n\n" +
+    "Missing Skills:\n" + data.missing_skills.join(", ");
+}
+
+/* SERVICE WORKER REGISTRATION (REQUIRED FOR PWA) */
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/static/sw.js");
+  });
+}
+</script>
+
+</body>
+</html>
