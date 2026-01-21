@@ -1,5 +1,4 @@
- Jupiter Match:
-
+ #Jupiter Match:
 
 
 Jupiter Match is a small web app I’m building to understand how
@@ -7,14 +6,12 @@ Jupiter Match is a small web app I’m building to understand how
 ATS-style resume and job matching works.
 
 
-
 The app lets users upload a resume and a job description and then
 
 shows how well they match based on skills.
 
 
-
-Features:
+#Features:
 
 - Upload resume (PDF / DOCX)
 
@@ -29,8 +26,7 @@ Features:
 - PWA support (installable app)
 
 
-
-Tech Used:
+#Tech Used:
 
 - FastAPI (Python)
 
@@ -39,18 +35,14 @@ Tech Used:
 - OpenAI API
 
 
-
-Status:
+#Status:
 
 This project is still in progress and is being improved step by step
 
 as part of my learning.
 
 
-
-More features like login, profiles, and saving match history will be
-
-added later.
-
+#Future Improvements:
+This project is currently a working prototype built for learning and experimentation. Planned improvements include better skill extraction using more structured methods, support for comparing multiple resumes and job descriptions, and refining the ATS score with role-specific weighting. The UI can be improved with clearer visual feedback, and basic user accounts could be added to save past results. A future goal is to deploy the app to the cloud for easier access beyond local use.
 
 
