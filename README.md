@@ -1,4 +1,4 @@
-\# Jupiter Match
+ Jupiter Match:
 
 
 
@@ -14,33 +14,33 @@ shows how well they match based on skills.
 
 
 
-\## Features
+Features:
 
-\- Upload resume (PDF / DOCX)
+- Upload resume (PDF / DOCX)
 
-\- Upload job description
+- Upload job description
 
-\- Skill matching between resume and job
+- Skill matching between resume and job
 
-\- Basic ATS-style match score
+- Basic ATS-style match score
 
-\- Dark theme UI
+- Dark theme UI
 
-\- PWA support (installable app)
-
-
-
-\## Tech Used
-
-\- FastAPI (Python)
-
-\- HTML, CSS, JavaScript
-
-\- OpenAI API
+- PWA support (installable app)
 
 
 
-\## Status
+Tech Used:
+
+- FastAPI (Python)
+
+- HTML, CSS, JavaScript
+
+- OpenAI API
+
+
+
+Status:
 
 This project is still in progress and is being improved step by step
 
